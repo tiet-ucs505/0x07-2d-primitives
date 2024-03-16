@@ -1,4 +1,4 @@
-# 0x07 : Composing 2D Primitives with Transformations #
+# 0x07 : 2D Primitives #
 
 ## Objective ##
 
