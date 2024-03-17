@@ -1,5 +1,13 @@
 # 0x07 : 2D Primitives #
 
+|                  |                          |
+|------------------|--------------------------|
+| Code             | 0x07                     |
+| Submission Opens | Wed 3 Apr 2024 17:00 hrs |
+| Deadline         | Mon 8 Apr 2024 08:00 hrs |
+| Weightage        | 3 marks                  |
+
+
 ## Objective ##
 
 + Use
