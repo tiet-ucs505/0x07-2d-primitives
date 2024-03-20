@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full">
+  <head>
+    <title>0x07 : 2D Primitives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+  <body class="h-full w-full text-sm">
+    <div class="container flex flex-col nowrap gap-2
+                p-8 h-full m-auto">
+      <header class="flex-none">
+        <h1 class="text-2xl font-bold">0x07 : 2D Primitives</h1>
+        <p class="text-right" id="by"></p>
+      </header>
+      <div class="flex-1 flex flex-col lg:flex-row
+                  nowrap gap-8">
+        <div class="flex-1 relative">
+          <img class="hidden" id="refImg"/>
+          <canvas id="myCanvas"
+                  class=" bg-slate-100 w-full h-full"></canvas>
+          <div class="absolute top-0 right-0 text-center">
+            <a class="cursor-pointer block p-2
+                      text-blue-300 hover:text-blue-500
+                      active:text-blue-700"
+               href="javascript:flipVisible()"
+               title="Switch to Reference Image."
+               ><ion-icon
+                  name="image"
+                  id="switchButtonIcon"
+                  class="text-3xl"
+                  ></ion-icon><br/>
+              <span class="text-sm"
+                    id="switchButtonText"
+                    >Show Image</span></a>
+            <a class="cursor-pointer block p-2
+                      text-blue-300 hover:text-blue-500
+                      active:text-blue-700"
+               href="javascript:saveVisible()"
+               title="Download canvas as image."
+               ><ion-icon
+                  name="save"
+                  class="text-3xl"
+                  ></ion-icon><br/>
+              <span class="text-sm">Download</span></a>
+          </div>
+        </div>
+        <div id="transform-controls"
+             class="flex-none flex flex-col gap-2 hidden
+                    lg:max-w-md mb-2">
+          <header class="flex-none flex flex-row
+                         justify-between items-baseline">
+            <h2 class="text-xl font-bold">Transforms</h2>
+            <button class="p-0.5 px-8 bg-lime-100
+                           border-lime-500 border
+                           text-lime-600 font-bold
+                           w-half text-base rounded"
+                    id="transform-submit"
+                    >Update</button>            
+          </header>
+          <div class="control flex flex-row gap-4
+                      items-baseline justify-between">
+            <input name="isTranslate"
+                   id="isTranslate"
+                   type="checkbox"
+                   class="flex-none"
+                   />
+            <h3 class="flex-none text-sm">Translate
+              to: </h3>
+            <input name="dx"
+                   id="dx"
+                   type="number"
+                   min="0"
+                   max="1"
+                   step="0.002"
+                   class="flex-1 border p-1 rounded"
+                   placeholder="Dx = 0 (by default)"
+                   />
+            <input name="dy"
+                   id="dy"
+                   type="number"
+                   min="0"
+                   max="1"
+                   step="0.002"
+                   class="flex-1 border p-1 rounded"
+                   placeholder="Dy = 0 (by default)"
+                   />
+          </div>
+          <div class="control flex flex-row gap-4
+                      items-baseline justify-between">
+            <input name="isRotate"
+                   id="isRotate"
+                   type="checkbox"
+                   class="flex-none"
+                   />
+            <h3 class="flex-none text-sm">Rotate by: </h3>
+            <input name="theta"
+                   id="theta"
+                   type="number"
+                   min="0"
+                   max="6.283185307"
+                   step="0.002"
+                   class="flex-1 border p-1 rounded"
+                   placeholder="Theta (in radians) = 0 (by default)"
+                   />
+          </div>
+          <div class="control flex flex-row gap-4
+                      items-baseline justify-between">
+            <input name="isScale"
+                   id="isScale"
+                   type="checkbox"
+                   class="flex-none"
+                   />
+            <h3 class="flex-none text-sm">Scale by: </h3>
+            <input name="sx"
+                   id="sx"
+                   type="number"
+                   min="0"
+                   max="1"
+                   step="0.002"
+                   class="flex-1 border p-1 rounded"
+                   placeholder="Sx = 1.0 (by default)"
+                   />
+            <input name="sy"
+                   id="sy"
+                   type="number"
+                   min="0"
+                   max="1"
+                   step="0.002"
+                   class="flex-1 border p-1 rounded"
+                   placeholder="Sy = 1.0 (by default)"
+                   />
+          </div>
+          <div class="control flex flex-row gap-4
+                      items-baseline justify-between">
+            <input name="isShear"
+                   id="isShear"
+                   type="checkbox"
+                   class="flex-none"
+                   />
+            <h3 class="flex-none text-sm">Shear by: </h3>
+            <input name="hx"
+                   id="hx"
+                   type="number"
+                   min="0"
+                   max="1"
+                   step="0.002"
+                   class="flex-1 border p-1 rounded"
+                   placeholder="Hx = 0 (by default)"
+                   />
+            <input name="hy"
+                   id="hy"
+                   type="number"
+                   min="0"
+                   max="1"
+                   step="0.002"
+                   class="flex-1 border p-1 rounded"
+                   placeholder="Hy = 0 (by default)"
+                   />
+          </div>
+          <div class="control flex flex-row gap-4
+                      justify-between items-baseline">
+            <input name="isReflect"
+                   id="isReflect"
+                   type="checkbox"
+                   class="flex-none"
+                   />
+            <h3 class="flex-none text-sm">Reflect:</h3>
+            <input name="Ra"
+                   id="Ra"
+                   type="number"
+                   step="0.002"
+                   max="1e5"
+                   min="-1e5"
+                   class="flex-auto border p-1 rounded"
+                   placeholder="Ra"
+                   />
+            <span>× X +</span>
+            <input name="Rb"
+                   id="Rb"
+                   type="number"
+                   step="0.002"
+                   max="1e5"
+                   min="-1e5"
+                   class="flex-auto border p-1 rounded"
+                   placeholder="Rb"
+                   />
+            <span>× Y +</span>
+            <input name="Rc"
+                   id="Rc"
+                   type="number"
+                   step="0.002"
+                   max="1e5"
+                   min="-1e5"
+                   class="flex-auto border p-1 rounded"
+                   placeholder="Rc"
+                   />
+            <span>= 0</span>
+          </div>
+        </div>
+
+        <div id="fill-controls"
+             class="flex flex-col gap-2 hidden">
+
+          <header class="flex-none flex flex-row
+                         justify-between items-baseline">
+            <h2 class="text-xl font-bold">Fill style</h2>
+            <button class="p-0.5 px-8 bg-lime-100
+                           border-lime-500 border
+                           text-lime-600 font-bold
+                           w-half text-base rounded"
+                    id="fill-submit"
+                    >Update</button>            
+          </header>
+          <div class="control flex flex-row gap-4
+                      justify-between items-baseline">
+            <div class="flex-1 flex flex-row gap-1
+                        justify-between items-baseline"
+                 >
+              <input name="isFillColor"
+                     id="isFillColor"
+                     type="checkbox"
+                     class="flex-none"
+                     />
+              <h3 class="flex-none text-sm">Color:</h3>
+              <input name="fillColor"
+                     id="fillColor"
+                     type="color"
+                     class="flex-auto border rounded"
+                     placeholder="Fill Color"
+                     />
+            </div>
+
+            <div class="flex-1 flex flex-row gap-1
+                        justify-between items-baseline"
+                 >
+              <input name="isFillGradient"
+                     id="isFillGradient"
+                     type="checkbox"
+                     class="flex-none"
+                     />
+              <h3 class="flex-none text-sm">Gradient:</h3>
+              <input name="fillGradientAt0"
+                     id="fillGradientAt0"
+                     type="color"
+                     class="flex-auto border rounded"
+                     placeholder="Fill Gradient at 0"
+                     />
+              <input name="fillGradientAt1"
+                     id="fillGradientAt1"
+                     type="color"
+                     class="flex-auto border rounded"
+                     placeholder="Fill Gradient at 1"
+                     />
+            </div>
+
+            <div class="flex-1 flex flex-row gap-1
+                        justify-between items-baseline"
+                 >
+              <input name="isFillPattern"
+                     id="isFillPattern"
+                     type="checkbox"
+                     class="flex-none"
+                     />
+              <h3 class="flex-none text-sm">Pattern Scale:</h3>
+              <input name="fillPatternScale"
+                     id="fillPatternScale"
+                     type="number"
+                     min="-5"
+                     max="5"
+                     step="0.02"
+                     class="flex-auto border p-1 rounded"
+                     placeholder="Scale"
+                     />
+            </div>
+          </div>
+        </div>
+
+        <div id="stroke-controls"
+             class="flex flex-col gap-2 hidden">
+
+          <header class="flex-none flex flex-row
+                         justify-between items-baseline">
+            <h2 class="text-xl font-bold">Stroke style</h2>
+            <button class="p-0.5 px-8 bg-lime-100
+                           border-lime-500 border
+                           text-lime-600 font-bold
+                           w-half text-base rounded"
+                    id="stroke-submit"
+                    >Update</button>            
+          </header>
+          <div class="control flex flex-row gap-4
+                      justify-between items-baseline">
+            <div class="flex-1 flex flex-row gap-1
+                        justify-between items-baseline"
+                 >
+              <input name="isStrokeColor"
+                     id="isStrokeColor"
+                     type="checkbox"
+                     class="flex-none"
+                     />
+              <h3 class="flex-none text-sm">Color:</h3>
+              <input name="strokeColor"
+                     id="strokeColor"
+                     type="color"
+                     class="flex-auto border rounded"
+                     placeholder="Color"
+                     />
+            </div>
+
+            <div class="flex-1 flex flex-row gap-1
+                        justify-between items-baseline"
+                 >
+              <input name="isStrokeGradient"
+                     id="isStrokeGradient"
+                     type="checkbox"
+                     class="flex-none"
+                     />
+              <h3 class="flex-none text-sm">Gradient:</h3>
+              <input name="strokeGradientAt0"
+                     id="strokeGradientAt0"
+                     type="color"
+                     class="flex-auto border rounded"
+                     placeholder="Gradient at 0"
+                     />
+              <input name="strokeGradientAt1"
+                     id="strokeGradientAt1"
+                     type="color"
+                     class="flex-auto border rounded"
+                     placeholder="Gradient at 1"
+                     />
+            </div>
+
+            <div class="flex-1 flex flex-row gap-1
+                        justify-between items-baseline"
+                 >
+              <input name="isStrokePattern"
+                     id="isStrokePattern"
+                     type="checkbox"
+                     class="flex-none"
+                     />
+              <h3 class="flex-none text-sm">Pattern Scale:</h3>
+              <input name="strokePatternScale"
+                     id="strokePatternScale"
+                     type="number"
+                     min="-5"
+                     max="5"
+                     step="0.02"
+                     class="flex-auto border p-1 rounded"
+                     placeholder="Scale"
+                     />
+            </div>
+          </div>
+          <div class="control flex flex-row gap-4
+                      justify-between items-baseline">
+            <div class="flex-1 flex flex-row gap-1
+                        justify-between items-baseline"
+                 >
+              <h3 class="flex-none text-sm">Line Width:</h3>
+              <input name="strokeLineWidth"
+                     id="strokeLineWidth"
+                     type="number"
+                     min="-5"
+                     max="5"
+                     step="0.02"
+                     class="flex-initial border p-1 rounded"
+                     placeholder="Line Width"
+                     />
+              <h3 class="flex-none text-sm">Line Pattern:</h3>
+              <input name="strokeLinePattern"
+                     id="strokeLinePattern"
+                     type="text"
+                     class="flex-auto border p-1 rounded"
+                     placeholder="CSV of dash,gap,... lengths"
+                     />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hidden">
+      <img id="pattern" src="./assets/patterns/pattern-default.png"/>
+    </div>
+
+    <script type="text/javascript"
+            src="./experiment.js"></script>
+    <script type="text/javascript"
+            src="./utils.js"></script>
+    <script type="text/javascript"
+            src="./canvas-helpers.js"></script>
+    <script type="text/javascript"
+            src="./domel.js"></script>
+    <script type="text/javascript"
+            src="./delayable.js"></script>
+    <script type="text/javascript"
+            src="./controls.js"></script>
+    <script type="text/javascript"
+            src="./main.js"></script>
+    <script type="text/javascript">
+      main()
+    </script>
+  </body>
+</html>
