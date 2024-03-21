@@ -1,8 +1,6 @@
 # 0x07 : 2D Primitives #
 
-## Identifier ##
-+ **Name** : 
-+ **Roll No** :
+![](./assets/teaser.png)
 
 ## Assignment ##
 
