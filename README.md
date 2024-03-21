@@ -108,6 +108,14 @@ collage as:
 `<roll-no>-0x07-2d-primitives-collage.png`  
 Upload it to the form along with your submission.
 
+## Submit ##
+
+1. Git URL
+2. Commit ID
+3. Reference Image (of the shape chosen in Step 1)
+4. Teaser (from Collage in Step 6)
+
+
 ## Candidate's Remarks ##
 
 *[Statements within braces [] are comments,
