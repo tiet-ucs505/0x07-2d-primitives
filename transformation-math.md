@@ -34,9 +34,12 @@ well.
 
 Preserves distances and oriented angles
 
-$$M_t\left(\begin{matrix}h\\k\end{matrix}\right) =
+$$M_t\left(\begin{matrix}h\\
+k\end{matrix}\right) =
 \begin{bmatrix}
-1&0&h \\ 0&1&k \\ 0&0&1
+1&0&h \\ 
+0&1&k \\
+0&0&1
 \end{bmatrix}$$
 
 ## Rotations ##
@@ -45,29 +48,41 @@ Preserves relative angles and distances
 
 $$M_r\left(\theta\right) =
 \begin{bmatrix}
-\cos\theta&-\sin\theta&0 \\ \sin\theta&\cos\theta&0 \\ 0&0&1
+\cos\theta&-\sin\theta&0 \\
+\sin\theta&\cos\theta&0 \\
+0&0&1
 \end{bmatrix}$$
 
 
 ## Uniform Scaling ##
 
 Preserves relative angles and ratio between distances
+
 $$M_{u}\left(\lambda\right) =
 \begin{bmatrix}
-\lambda&0&0 \\ 0&\lambda&0 \\ 0&0&1
+\lambda&0&0 \\
+0&\lambda&0 \\ 
+0&0&1
 \end{bmatrix}$$
 
 
 ## Non-uniform Scaling and Shear ##
 
 Preserves parallelism
-$$M_{s}\left(\begin{matrix}s_x\\s_y\end{matrix}\right) =
+
+$$M_{s}\left(\begin{matrix}s_x\\
+s_y\end{matrix}\right) =
 \begin{bmatrix}
-s_x&0&0 \\ 0&s_y&0 \\ 0&0&1
+s_x&0&0 \\ 
+0&s_y&0 \\ 
+0&0&1
 \end{bmatrix}$$
 
-$$M_{sh}\left(\begin{matrix}h_x\\h_y\end{matrix}\right) =
+$$M_{\mathrm{sh}}\left(\begin{matrix}h_x\\
+h_y\end{matrix}\right) =
 \begin{bmatrix}
-1&h_y&0 \\ h_x&1&0 \\ 0&0&1
+1&h_y&0 \\ 
+h_x&1&0 \\ 
+0&0&1
 \end{bmatrix}$$
 
