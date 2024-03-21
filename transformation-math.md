@@ -12,7 +12,11 @@ $$\begin{bmatrix}
 = \left[\begin{matrix}
 &A& \\
 0&\cdots&0
-\end{matrix}\;\bigg\rvert\;\begin{matrix}
+\end{matrix}
+\mkern 0.5em
+\bigg\rvert
+\mkern 0.5em
+\begin{matrix}
 \mathbf{b} \\
 1
 \end{matrix}\right]\begin{bmatrix}
