@@ -1,4 +1,8 @@
 class Experiment {
+  // Candidate Details
+  static rollNo = '10983743'
+  static name = 'The Tutor'
+
   canvasSel = '#myCanvas'
   transformControls
   fillControls
@@ -22,7 +26,7 @@ class Experiment {
 
     // Uncomment to enable tranform controls
     // --------------------------------------------------
-    // this.transformControls.unhide()
+    this.transformControls.unhide()
 
 
     // ------------------------------------------------
