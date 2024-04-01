@@ -25,7 +25,7 @@ function main() {
   updateCandidateDetails(Experiment)
 
   // Set up refimg
-  setupRefimg()
+  setupRefimg(Experiment)
 
   // Set up canvas
   flipVisible('Canvas')
@@ -128,7 +128,7 @@ function flipVisible(name) {
     .textContent = `Show ${invisible}`
 }
 
-function setupRefimg() {
+function setupRefimg({rollNo}) {
   document.querySelector(refimgSel)
     .src = `./assets/${rollNo}-${slug(document.title)}-refimg.png`
 }
